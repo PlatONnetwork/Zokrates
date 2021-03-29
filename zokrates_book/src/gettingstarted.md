@@ -61,7 +61,7 @@ zokrates generate-proof
 # export a solidity verifier
 zokrates export-verifier
 # export a platon-cpp wasm verifier
-zokrates -t platon-cpp -o verifier.hpp
+zokrates export-verifier -t platon-cpp -o verifier.hpp
 ```
 
 The CLI commands are explained in more detail in the [CLI reference](reference/cli.md).
