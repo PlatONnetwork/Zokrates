@@ -402,7 +402,7 @@ class Verifier {
         };
   }
 
-  std::uint256_t Verify(const std::vector<std::uint256_t> &inputs,
+  int Verify(const std::vector<std::uint256_t> &inputs,
                         const Proof &proof) {
     std::uint256_t snark_scalar_field =
         "21888242871839275222246405745257275088548364400416034343698204186575808495617"_uint256;
@@ -427,7 +427,7 @@ class Verifier {
             vk.g_alpha, vk.h_beta, vk_x, vk.h_gamma, proof.c, vk.h,
             Neg(Addition(proof.a, vk.g_alpha)),
             Addition(proof.b, vk.h_beta))){
-      return 1;
+      return -1;
     }
 
     /**
@@ -435,7 +435,7 @@ class Verifier {
      */
     if (!pairing::PairingProd2(proof.a, vk.h_gamma, Neg(vk.g_gamma),
                                proof.b))
-      return 2;
+      return -2;
     return 0;
   }
 
