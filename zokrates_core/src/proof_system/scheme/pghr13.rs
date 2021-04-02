@@ -448,7 +448,7 @@ class Verifier {
         };
   }
 
-  std::uint256_t Verify(const std::vector<std::uint256_t> &inputs,
+  int Verify(const std::vector<std::uint256_t> &inputs,
                         const Proof &proof) {
     std::uint256_t snark_scalar_field =
         "21888242871839275222246405745257275088548364400416034343698204186575808495617"_uint256;
@@ -466,23 +466,23 @@ class Verifier {
     vk_x = Addition(vk_x, vk.ic[0]);
     if (!pairing::PairingProd2(proof.a, vk.a, Neg(proof.a_p),
                                P2()))
-      return 1;
+      return -1;
     if (!pairing::PairingProd2(vk.b, proof.b, Neg(proof.b_p),
                                P2()))
-      return 2;
+      return -2;
     if (!pairing::PairingProd2(proof.c, vk.c, Neg(proof.c_p),
                                P2()))
-      return 3;
+      return -3;
     if (!pairing::PairingProd3(proof.k, vk.gamma,
                                Neg(Addition(
                                    vk_x, Addition(proof.a, proof.c))),
                                vk.gamma_beta_2,
                                Neg(vk.gamma_beta_1), proof.b))
-      return 4;
+      return -4;
     if (!pairing::PairingProd3(Addition(vk_x, proof.a), proof.b,
                                Neg(proof.h), vk.z,
                                Neg(proof.c), P2()))
-      return 5;
+      return -5;
     return 0;
   }
   bool VerifyTx(const std::array<std::uint256_t, 2> &a,
